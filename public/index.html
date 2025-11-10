@@ -4,233 +4,319 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>API Key Generator</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
     <style>
-      /* Reset dan Font Dasar */
       :root {
-        --navy-darkest: #0a192f;
-        --navy-dark: #112a4a;
-        --navy-light: #204a87;
-        --accent-blue: #007bff;
-        --accent-hover: #0056b3;
+        --primary-gradient: linear-gradient(45deg, #0056b3, #007bff);
+        --button-gradient: linear-gradient(45deg, #007bff, #0056b3);
+        --button-hover-gradient: linear-gradient(45deg, #0056b3, #003f8a);
         --text-light: #f0f4f8;
         --text-dark: #a8b2d1;
-        --key-text: #76f1ad; /* Warna hijau neon untuk key */
-        --border-color: #004a99;
+        --key-text: #76f1ad;
+        --border-color-opaque: rgba(0, 123, 255, 0.4);
+        --border-color-transparent: rgba(0, 123, 255, 0.2);
+        --shadow-color: rgba(0, 0, 0, 0.6);
+        --input-bg: #0a192f;
+        --copy-btn-bg: #004a99;
       }
-
       body {
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-          Helvetica, Arial, sans-serif;
-        background-color: var(--navy-darkest);
+        font-family: "Poppins", sans-serif;
+        background: linear-gradient(135deg, #0a192f, #1a2b4c);
         color: var(--text-light);
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
         min-height: 100vh;
         margin: 0;
-        padding: 1rem;
+        padding: 1.5rem;
         box-sizing: border-box;
       }
-
-      /* Kontainer Utama */
       .container {
-        background-color: var(--navy-dark);
-        padding: 2rem 2.5rem;
-        border-radius: 10px;
-        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+        background: rgba(26, 43, 76, 0.6);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid var(--border-color-transparent);
+        padding: 2.5rem 3rem;
+        border-radius: 15px;
+        box-shadow: 0 20px 40px var(--shadow-color);
         width: 100%;
-        max-width: 600px;
+        max-width: 650px;
         text-align: center;
-        border: 1px solid var(--border-color);
+        animation: fadeIn 0.8s ease-out;
+        margin-bottom: 2rem;
       }
-
-      /* Judul */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
       h1 {
         color: var(--text-light);
         margin-top: 0;
-        margin-bottom: 0.5rem;
-        font-size: 2rem;
+        margin-bottom: 0.75rem;
+        font-size: 2.5rem;
+        font-weight: 700;
+        background: -webkit-linear-gradient(45deg, #e0e7ff, #a8b2d1);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
       }
-
       p {
         color: var(--text-dark);
-        font-size: 1.1rem;
-        margin-bottom: 2rem;
+        font-size: 1.15rem;
+        margin-bottom: 1.5rem; /* Mengurangi margin */
+        line-height: 1.6;
       }
 
-      /* Tombol Generate Utama */
-      #generateBtn {
-        font-family: inherit;
+      /* --- INI BAGIAN PENTING YANG HILANG --- */
+      .input-group {
+        margin-bottom: 1.5rem;
+        text-align: left;
+      }
+      .input-group label {
+        display: block;
+        color: var(--text-dark);
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+      }
+      .input-group input {
+        font-family: "Poppins", sans-serif;
         font-size: 1rem;
-        font-weight: bold;
-        padding: 0.85rem 1.5rem;
+        width: 100%;
+        padding: 0.75rem 1rem;
+        background-color: var(--input-bg);
+        color: var(--text-light);
+        border: 1px solid var(--border-color-opaque);
+        border-radius: 6px;
+        box-sizing: border-box;
+        outline: none;
+        transition: all 0.3s ease;
+      }
+      .input-group input:focus {
+        border-color: var(--primary-gradient);
+        box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.35);
+      }
+      /* ------------------------------------ */
+
+      #generateBtn {
+        font-family: "Poppins", sans-serif;
+        font-size: 1.1rem;
+        font-weight: 600;
+        padding: 1rem 2rem;
         border: none;
-        border-radius: 5px;
+        border-radius: 8px;
         cursor: pointer;
         transition: all 0.3s ease;
-        background-color: var(--accent-blue);
+        background: var(--button-gradient);
         color: white;
         width: 100%;
-        margin-bottom: 2rem;
-        letter-spacing: 0.5px;
+        max-width: 350px;
+        margin-bottom: 2.5rem;
+        box-shadow: 0 8px 20px rgba(0, 123, 255, 0.3);
       }
-
       #generateBtn:hover {
-        background-color: var(--accent-hover);
-        transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(0, 123, 255, 0.2);
+        background: var(--button-hover-gradient);
+        transform: translateY(-4px);
+        box-shadow: 0 12px 25px rgba(0, 123, 255, 0.4);
       }
-
-      /* Area Output Key */
+      #generateBtn:disabled {
+        background: #555;
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+      }
       .output-label {
         display: block;
         text-align: left;
         color: var(--text-dark);
-        font-weight: bold;
-        margin-bottom: 0.5rem;
+        font-weight: 600;
+        margin-bottom: 0.75rem;
+        font-size: 1.05rem;
       }
-
-      /* === PERUBAHAN CSS DIMULAI DI SINI === */
-
       .output-container {
-        /* 1. Menggunakan position relative untuk menjadi 'parent' dari tombol copy */
         position: relative;
         width: 100%;
       }
-
-      /* Text Area */
       textarea#apiKeyArea {
-        font-family: "Courier New", Courier, monospace;
+        font-family: "Fira Code", monospace;
         font-size: 1.1rem;
         width: 100%;
-        padding: 0.75rem;
-        background-color: var(--navy-darkest);
-        color: var(--key-text); /* Warna teks key */
-        border: 1px solid var(--border-color);
-        border-radius: 5px; /* Radius di semua sisi */
-        resize: none;
-        box-sizing: border-box; /* Penting untuk padding */
+        min-height: 120px;
+        padding: 1rem 1.25rem;
+        padding-right: 7.5rem;
+        background-color: var(--input-bg);
+        color: var(--key-text);
+        border: 1px solid var(--border-color-opaque);
+        border-radius: 8px;
+        resize: vertical;
+        box-sizing: border-box;
         outline: none;
-
-        /* 2. Memberi ruang di kanan agar teks tidak tertulis di bawah tombol */
-        padding-right: 6.5rem;
+        box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.3);
+        line-height: 1.8;
       }
-
-      textarea#apiKeyArea::placeholder {
-        color: #4a6c9b;
-      }
-
-      textarea#apiKeyArea:focus {
-        border-color: var(--accent-blue);
-        box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
-      }
-
-      /* Tombol Copy */
       #copyBtn {
-        font-family: inherit;
-        font-size: 0.9rem; /* Sedikit lebih kecil */
-        font-weight: bold;
-        padding: 0.6rem 0.8rem; /* Sedikit lebih kecil */
-        border: 1px solid var(--border-color);
-        border-radius: 5px; /* Radius di semua sisi */
+        font-family: "Poppins", sans-serif;
+        font-size: 0.95rem;
+        font-weight: 600;
+        padding: 0.7rem 1.1rem;
+        border: 1px solid rgba(0, 123, 255, 0.6);
+        border-radius: 6px;
         cursor: pointer;
         transition: all 0.3s ease;
-        background-color: var(--navy-light);
+        background-color: var(--copy-btn-bg);
         color: var(--text-light);
-
-        /* 3. Diposisikan secara absolut di dalam .output-container */
         position: absolute;
         top: 50%;
-        right: 0.75rem;
-        transform: translateY(-50%); /* Trik untuk memusatkan vertikal */
+        right: 0.8rem;
+        transform: translateY(-50%);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      }
+      .copyright {
+        text-align: center;
+        color: var(--text-dark);
+        font-size: 0.9rem;
+        opacity: 0.7;
+        margin-top: auto;
       }
 
-      #copyBtn:hover {
-        background-color: var(--accent-blue);
+      /* Style responsive */
+      @media (max-width: 768px) {
+        .container {
+          padding: 2rem 1.5rem;
+          margin-bottom: 1.5rem;
+        }
+        h1 { font-size: 2rem; }
+        p { font-size: 1rem; }
+        #generateBtn { font-size: 1rem; }
+        textarea#apiKeyArea { padding-right: 6.5rem; }
+        #copyBtn { padding: 0.5rem 0.7rem; right: 0.5rem; }
+        .copyright { font-size: 0.8rem; }
       }
-      /* === PERUBAHAN CSS BERAKHIR DI SINI === */
     </style>
   </head>
   <body>
     <div class="container">
       <h1>API Key Generator</h1>
-      <p>Klik tombol di bawah untuk membuat API key baru yang aman.</p>
+      <p>Masukkan nama layanan dan klik tombol untuk membuat API key baru.</p>
 
+      <div class="input-group">
+        <label for="serviceNameInput">Nama Layanan / Aplikasi</label>
+        <input
+          type="text"
+          id="serviceNameInput"
+          placeholder="Contoh: Aplikasi Kasir"
+        />
+      </div>
       <button id="generateBtn">Buat API Key Baru</button>
 
-      <label for="apiKeyArea" class="output-label">Your New API Key:</label>
+      <label for="apiKeyArea" class="output-label">API Key Baru Anda:</label>
 
       <div class="output-container">
         <textarea
           id="apiKeyArea"
-          rows="3"
+          rows="5"
           readonly
-          placeholder="API key Anda akan muncul di sini..."
+          placeholder="API key akan muncul di sini setelah dibuat..."
         ></textarea>
         <button id="copyBtn" title="Salin ke Clipboard">Salin</button>
       </div>
     </div>
 
+    <footer class="copyright">&copy; octaviani 2025</footer>
+
     <script>
+      // Ambil elemen-elemen
+      const generateButton = document.getElementById("generateBtn");
+      const copyButton = document.getElementById("copyBtn");
+      const apiKeyTextarea = document.getElementById("apiKeyArea");
+      const serviceNameInput = document.getElementById("serviceNameInput"); // Variabel baru
+
       /**
-       * Fungsi untuk menghasilkan API key yang aman menggunakan Crypto API
+       * Fungsi ini memanggil SERVER untuk membuat key
        */
-      function generateApiKey() {
-        // Menghasilkan 32 byte nilai acak (akan menjadi 64 karakter hex)
-        const array = new Uint8Array(32);
-        window.crypto.getRandomValues(array);
+      async function generateKeyOnServer() {
+        const serviceName = serviceNameInput.value;
+        if (!serviceName) {
+          alert("Silakan masukkan nama layanan terlebih dahulu.");
+          serviceNameInput.focus();
+          return;
+        }
 
-        // Mengubah byte array menjadi string hex
-        const hexString = Array.from(array, (byte) =>
-          byte.toString(16).padStart(2, "0")
-        ).join("");
+        // Tampilkan status loading
+        generateButton.disabled = true;
+        generateButton.textContent = "Membuat...";
+        apiKeyTextarea.value = "Sedang memproses permintaan...";
 
-        // Menambahkan prefix yang umum (opsional)
-// BENAR
-        return `sk_live_${hexString}`;      }
+        try {
+          // Panggil server
+          const response = await fetch("/generate-api-key", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ serviceName: serviceName }), // Kirim serviceName
+          });
+
+          const data = await response.json();
+
+          if (!response.ok) {
+            throw new Error(data.error || "Gagal mengambil data dari server");
+          }
+
+          // Sukses! Tampilkan key
+          apiKeyTextarea.value = data.apiKey;
+        } catch (error) {
+          console.error("Error:", error);
+          apiKeyTextarea.value = `Gagal membuat key: ${error.message}`;
+          alert(`Gagal membuat key: ${error.message}`);
+        } finally {
+          // Kembalikan tombol ke normal
+          generateButton.disabled = false;
+          generateButton.textContent = "Buat API Key Baru";
+        }
+      }
 
       /**
-       * Fungsi untuk menyalin teks ke clipboard
+       * Fungsi copyToClipboard (Tidak Berubah)
        */
       function copyToClipboard(text, buttonElement) {
-        if (!text) {
-          alert("Tidak ada API key untuk disalin. Buat satu terlebih dahulu.");
+        if (!text || text.startsWith("Gagal") || text.startsWith("Sedang")) {
+          alert("Tidak ada API key valid untuk disalin.");
           return;
         }
 
         navigator.clipboard
           .writeText(text)
           .then(() => {
-            // === INI ADALAH BAGIAN UNTUK PESAN "DISALIN" ===
             const originalText = buttonElement.textContent;
             buttonElement.textContent = "Disalin!";
-            buttonElement.style.backgroundColor = "#28a745"; // Warna hijau sukses
-
+            buttonElement.style.backgroundColor = "#28a745";
             setTimeout(() => {
               buttonElement.textContent = originalText;
-              buttonElement.style.backgroundColor = "var(--navy-light)";
-            }, 2000); // Kembali ke normal setelah 2 detik
-            // === AKHIR BAGIAN PESAN ===
+              buttonElement.style.backgroundColor = "var(--copy-btn-bg)";
+            }, 2000);
           })
           .catch((err) => {
-            console.error("Gagal menyalin ke clipboard: ", err);
-            alert("Gagal menyalin. Silakan salin secara manual.");
+            console.error("Gagal menyalin:", err);
+            alert("Gagal menyalin. Silakan salin manual.");
           });
       }
 
-      // --- Event Listeners ---
+      // Event Listeners
+      generateButton.addEventListener("click", generateKeyOnServer); // Panggil fungsi baru
 
-      const generateButton = document.getElementById("generateBtn");
-      const copyButton = document.getElementById("copyBtn");
-      const apiKeyTextarea = document.getElementById("apiKeyArea");
-
-      // Event listener untuk tombol "Generate"
-      generateButton.addEventListener("click", () => {
-        const newKey = generateApiKey();
-        apiKeyTextarea.value = newKey;
-      });
-
-      // Event listener untuk tombol "Copy"
       copyButton.addEventListener("click", () => {
         copyToClipboard(apiKeyTextarea.value, copyButton);
       });
